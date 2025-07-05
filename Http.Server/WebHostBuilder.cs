@@ -5,7 +5,7 @@ namespace Http.Server;
 
 public class WebHostBuilder
 {
-    private string _webRootPath = "wwwroot";
+    public string WebRootPath = "wwwroot";
     private int _port = 8000;
     private readonly List<Func<RequestDelegate, RequestDelegate>> _middlewareFactories = [];
 
@@ -17,7 +17,7 @@ public class WebHostBuilder
 
     public WebHostBuilder UseWebRoot(string path)
     {
-        _webRootPath = path;
+        WebRootPath = path;
         return this;
     }
 
@@ -26,7 +26,11 @@ public class WebHostBuilder
         _port = port;
         return this;
     }
-    
+    public WebHostBuilder UseMiddleware(Func<RequestDelegate, RequestDelegate> middlewareFactory)
+    {
+        _middlewareFactories.Add(middlewareFactory);
+        return this;
+    }
     public WebHostBuilder AddMiddleware<TMiddleware>() where TMiddleware : class
     {
         _middlewareFactories.Add(next =>
@@ -64,14 +68,12 @@ public class WebHostBuilder
 
     private RequestDelegate BuildMiddlewarePipeline()
     {
-        if (!Directory.Exists(_webRootPath))
+        if (!Directory.Exists(WebRootPath))
         {
-            Directory.CreateDirectory(_webRootPath);
+            Directory.CreateDirectory(WebRootPath);
         }
-
         RequestDelegate app = new NotFoundMiddleware().InvokeAsync;
-        app = new RootPageMiddleware(app, _webRootPath).InvokeAsync;
-        app = new StaticFileMiddleware(app, _webRootPath).InvokeAsync;
+        
         for (var i = _middlewareFactories.Count - 1; i >= 0 ; i--)
         {
             app = _middlewareFactories[i](app);
@@ -80,4 +82,24 @@ public class WebHostBuilder
         return app;
     }
     
+}
+
+public static class WebHostBuilderExtensions
+{
+    private static WebHostBuilder UseStaticFiles(this WebHostBuilder builder)
+    {
+        return builder.UseMiddleware(next => new StaticFileMiddleware(next, builder.WebRootPath).InvokeAsync);
+    }
+
+    private static WebHostBuilder UseRootIndexPage(this WebHostBuilder builder)
+    {
+        return builder.UseMiddleware(next => new RootPageMiddleware(next, builder.WebRootPath).InvokeAsync);
+    }
+
+    public static WebHostBuilder BasicWebHost(this WebHostBuilder builder)
+    {
+        builder.UseStaticFiles();
+        builder.UseRootIndexPage();
+        return builder;
+    }
 }

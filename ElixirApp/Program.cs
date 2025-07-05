@@ -2,6 +2,8 @@
 
 var builder = new WebHostBuilder();
 
-var app = builder.Build();
+builder.BasicWebHost();
 
+
+var app = builder.Build();
 await app.RunAsync();
