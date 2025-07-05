@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Http", "Http\Http.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middleware", "Middleware\Middleware.csproj", "{2343A79F-353F-4C8D-8CB3-012DC59EC5A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Http.Server", "Http.Server\Http.Server.csproj", "{C7F8EBB6-7B47-4F1E-B2DB-B219EB62FF4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{2343A79F-353F-4C8D-8CB3-012DC59EC5A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2343A79F-353F-4C8D-8CB3-012DC59EC5A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2343A79F-353F-4C8D-8CB3-012DC59EC5A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7F8EBB6-7B47-4F1E-B2DB-B219EB62FF4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7F8EBB6-7B47-4F1E-B2DB-B219EB62FF4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7F8EBB6-7B47-4F1E-B2DB-B219EB62FF4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7F8EBB6-7B47-4F1E-B2DB-B219EB62FF4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Http.Server\Http.Server.csproj" />
       <ProjectReference Include="..\Http\Http.csproj" />
       <ProjectReference Include="..\Middleware\Middleware.csproj" />
     </ItemGroup>
